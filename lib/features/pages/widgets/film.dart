@@ -28,7 +28,7 @@ class _Film extends State<Film> {
       },
       itemCount: widget.moviesList.length,
       itemBuilder: (context, index) {
-        var rotate = _currentImage == index ? 0.0 : (22 / 7) / 40;
+        var rotate = _currentImage == index ? 0.0 : (22 / 7) / 20;
         return Column(
           children: [
             TweenAnimationBuilder(
@@ -43,7 +43,9 @@ class _Film extends State<Film> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const MovieDetails(),
+                      builder: (context) => MovieDetails(
+                        movieData: widget.moviesList[index],
+                      ),
                     ),
                   );
                 },

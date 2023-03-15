@@ -37,7 +37,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   provider:
   http: ^0.13.5
-  tmdb_api: ^2.1.4
+  lottie: ^2.3.0
 
 dev_dependencies:
   flutter_test:

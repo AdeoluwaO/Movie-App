@@ -2,7 +2,10 @@
 
 ## NOTE
 the app name is movie_app it was only tested on an android device 
-and should be usedon one 
+and should be used on one 
+
+i subimted my apk file but i haven't tested it
+due to time, there might be bugs.
 
 ## Get Started
 cd to the project root folder 

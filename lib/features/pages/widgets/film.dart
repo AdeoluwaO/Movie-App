@@ -6,10 +6,9 @@ import '../../moviedetails/moviedetails_screen.dart';
 import '../widgets/loading_screen.dart';
 
 class Film extends StatefulWidget {
-  const Film(
-      {super.key, required this.moviesList, required this.currentStatus});
+  Film({super.key, required this.moviesList, required this.currentStatus});
   final List moviesList;
-  final bool currentStatus;
+  bool currentStatus = true;
 
   @override
   State<Film> createState() => _Film();
@@ -17,7 +16,7 @@ class Film extends StatefulWidget {
 
 class _Film extends State<Film> {
   int _currentImage = 0;
-
+  final bool currentStatus = true;
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;

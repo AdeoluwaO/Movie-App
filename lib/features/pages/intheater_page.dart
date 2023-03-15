@@ -15,6 +15,7 @@ class InTheaterPage extends StatefulWidget {
 class _InTheaterPageState extends State<InTheaterPage> {
   List movies = [];
   bool isLoading = true;
+  bool loadingUpdate = true;
 
   @override
   void initState() {
@@ -22,16 +23,15 @@ class _InTheaterPageState extends State<InTheaterPage> {
     fetchTrending();
     isLoading = false;
     setState(() {
-      isLoading = false;
+      isLoading = loadingUpdate;
     });
     super.initState();
   }
 
   Future fetchTrending() async {
+    isLoading;
     final response = await getTrending();
-    setState(() {
-      movies = response;
-    });
+    isLoading = false;
   }
 
   @override
@@ -43,7 +43,7 @@ class _InTheaterPageState extends State<InTheaterPage> {
           height: 600,
           child: Film(
             moviesList: movies,
-            currentStatus: isLoading,
+            currentStatus: loadingUpdate,
           ),
         ),
       ],

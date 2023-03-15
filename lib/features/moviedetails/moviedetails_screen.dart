@@ -19,7 +19,7 @@ class _MovieDetailsState extends State<MovieDetails> {
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
     // for rating button
-    Icon icon = Icon(Icons.star_outline);
+    Icon icon = const Icon(Icons.star_outline);
     Color color = Colors.black;
     String status = 'Rate this';
 
@@ -57,7 +57,7 @@ class _MovieDetailsState extends State<MovieDetails> {
                         EdgeInsets.only(left: width * 0.1, top: height * 0.3),
                     child: PhysicalModel(
                       color: Colors.white,
-                      shadowColor: Color.fromARGB(193, 158, 158, 158),
+                      shadowColor: const Color.fromARGB(193, 158, 158, 158),
                       elevation: 8,
                       borderRadius: const BorderRadius.horizontal(
                         left: Radius.circular(60.0),
@@ -102,7 +102,7 @@ class _MovieDetailsState extends State<MovieDetails> {
                                         onTap: () {
                                           // still testing
                                           setState(() {
-                                            icon = Icon(Icons.star);
+                                            icon = const Icon(Icons.star);
                                             color = highlightColor;
                                             status = 'Rated';
                                           });

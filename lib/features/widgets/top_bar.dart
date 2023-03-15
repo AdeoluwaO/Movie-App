@@ -21,19 +21,19 @@ class TopBar extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               CustomIconButton(
-                icon: Icon(Icons.sort),
+                icon: const Icon(Icons.sort),
                 onTap: () {
                   scaffoldState.currentState?.openDrawer();
                 },
               ),
               CustomIconButton(
-                icon: Icon(Icons.search),
+                icon: const Icon(Icons.search),
                 onTap: () {},
               ),
             ],
           ),
-          SizedBox(height: 30),
-          CategoriesBar()
+          const SizedBox(height: 30),
+          const CategoriesBar()
         ],
       ),
     );

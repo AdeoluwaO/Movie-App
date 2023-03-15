@@ -21,7 +21,6 @@ class LandingPage extends StatefulWidget {
 class _LandingPage extends State<LandingPage> {
   var scaffoldKey = GlobalKey<ScaffoldState>();
 
-  @override
   List pages = const [
     InTheaterPage(),
     BoxOffice(),

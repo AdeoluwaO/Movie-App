@@ -28,9 +28,6 @@ class _CategoriesBar extends State<CategoriesBar> {
           scrollDirection: Axis.horizontal,
           itemCount: cat.length,
           itemBuilder: (_, index) {
-            final _offset =
-                _currentPage == index ? Offset(25, 0) : Offset(20, 0);
-
             return GestureDetector(
               onTap: () {
                 provider.changePage(index);
@@ -47,7 +44,7 @@ class _CategoriesBar extends State<CategoriesBar> {
                       style: TextStyle(
                         color: _currentPage == index
                             ? Colors.black
-                            : Color.fromARGB(214, 158, 158, 158),
+                            : const Color.fromARGB(214, 158, 158, 158),
                         fontSize: 30,
                         fontWeight:
                             _currentPage == index ? FontWeight.w400 : null,

@@ -1,8 +1,5 @@
 import 'dart:convert' as convert;
 import 'package:http/http.dart' as http;
-import 'package:provider/provider.dart';
-
-// local imports
 
 const String apiKey = '187d2a9c2c1a66c6beac88a4c4681554';
 
@@ -12,7 +9,7 @@ Future getTrending() async {
   final res = await http.get(Uri.parse(trending));
   Map jsonFormat = convert.jsonDecode(res.body);
   final movies = jsonFormat['results'];
-  // print(movies);
+
   return movies;
 }
 
@@ -22,7 +19,7 @@ Future boxOffice() async {
   final res = await http.get(Uri.parse(trending));
   Map jsonFormat = convert.jsonDecode(res.body);
   final movies = jsonFormat['results'];
-  // print(movies);
+
   return movies;
 }
 
@@ -32,7 +29,7 @@ Future commercial() async {
   final res = await http.get(Uri.parse(trending));
   Map jsonFormat = convert.jsonDecode(res.body);
   final movies = jsonFormat['results'];
-  // print(movies);
+
   return movies;
 }
 
@@ -41,7 +38,7 @@ Future getMovies() async {
   final res = await http.get(Uri.parse(trending));
   Map jsonFormat = convert.jsonDecode(res.body);
   final movies = jsonFormat['results'];
-  // print(movies);
+
   return movies;
 }
 

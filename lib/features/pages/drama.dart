@@ -14,10 +14,15 @@ class Drama extends StatefulWidget {
 
 class _DramaState extends State<Drama> {
   List movies = [];
+  bool isLoading = true;
 
   @override
   void initState() {
+    isLoading;
     fetch();
+    setState(() {
+      isLoading = false;
+    });
     super.initState();
   }
 
@@ -35,7 +40,7 @@ class _DramaState extends State<Drama> {
         const Genres(),
         SizedBox(
           height: 600,
-          child: Film(moviesList: movies),
+          child: Film(moviesList: movies, currentStatus: isLoading,),
         ),
       ],
     );

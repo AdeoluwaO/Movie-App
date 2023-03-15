@@ -14,10 +14,15 @@ class BoxOffice extends StatefulWidget {
 
 class _BoxOfficeState extends State<BoxOffice> {
   List movies = [];
+  bool isLoading = true;
 
   @override
   void initState() {
+    isLoading;
     fetch();
+    setState(() {
+      isLoading = false;
+    });
     super.initState();
   }
 
@@ -35,7 +40,10 @@ class _BoxOfficeState extends State<BoxOffice> {
         const Genres(),
         SizedBox(
           height: 600,
-          child: Film(moviesList: movies),
+          child: Film(
+            moviesList: movies,
+            currentStatus: isLoading,
+          ),
         ),
       ],
     );

@@ -3,10 +3,13 @@ import 'package:flutter/material.dart';
 // local imports
 import '../../global_variables.dart';
 import '../../moviedetails/moviedetails_screen.dart';
+import '../widgets/loading_screen.dart';
 
 class Film extends StatefulWidget {
-  const Film({super.key, required this.moviesList});
+  const Film(
+      {super.key, required this.moviesList, required this.currentStatus});
   final List moviesList;
+  final bool currentStatus;
 
   @override
   State<Film> createState() => _Film();
@@ -64,6 +67,7 @@ class _Film extends State<Film> {
                           widget.moviesList[index]['poster_path'].toString()),
                     ),
                   ),
+                  child: widget.currentStatus ? const LoadingScreen() : null,
                 ),
               ),
               builder: (context, value, child) {
@@ -82,7 +86,7 @@ class _Film extends State<Film> {
               children: [
                 const Icon(
                   Icons.star,
-                  color: Color.fromARGB(255, 243, 177, 55),
+                  color: highlightColor,
                 ),
                 Container(
                   margin: const EdgeInsets.symmetric(horizontal: 6.0),

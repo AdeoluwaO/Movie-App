@@ -18,6 +18,10 @@ class _MovieDetailsState extends State<MovieDetails> {
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
+    // for rating button
+    Icon icon = Icon(Icons.star_outline);
+    Color color = Colors.black;
+    String status = 'Rate this';
 
     return Scaffold(
       body: SingleChildScrollView(
@@ -60,6 +64,7 @@ class _MovieDetailsState extends State<MovieDetails> {
                       ),
                       child: Container(
                         height: 100,
+                        width: width,
                         decoration: const BoxDecoration(
                           color: Colors.white,
                           borderRadius: BorderRadius.horizontal(
@@ -67,28 +72,46 @@ class _MovieDetailsState extends State<MovieDetails> {
                           ),
                         ),
                         child: Container(
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 15, horizontal: 30),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          padding: EdgeInsets.fromLTRB(width * 0.0, 5, 0, 0),
+                          child: Stack(
                             children: [
-                              Column(
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
                                 children: [
-                                  CustomIconButton(
-                                    icon: const Icon(Icons.star),
-                                    onTap: () {},
-                                    color:
-                                        const Color.fromARGB(255, 243, 177, 55),
-                                    size: 25,
+                                  Column(
+                                    children: [
+                                      const Padding(
+                                        padding: EdgeInsets.only(top: 8.0),
+                                        child: Icon(
+                                          Icons.star,
+                                          size: 25,
+                                          color: highlightColor,
+                                        ),
+                                      ),
+                                      Text(widget.movieData['popularity']
+                                          .toString()),
+                                      const Text('overview')
+                                    ],
                                   ),
-                                  Text('Rating/10'),
-                                  Text('ratings'),
-                                ],
-                              ),
-                              Column(
-                                children: [
-                                  Icon(Icons.star_outline),
-                                  Text('Rate this')
+                                  Column(
+                                    children: [
+                                      CustomIconButton(
+                                        color: color,
+                                        icon: icon,
+                                        onTap: () {
+                                          // still testing
+                                          setState(() {
+                                            icon = Icon(Icons.star);
+                                            color = highlightColor;
+                                            status = 'Rated';
+                                          });
+                                        },
+                                        size: 30,
+                                      ),
+                                      Text(status)
+                                    ],
+                                  )
                                 ],
                               ),
                             ],
@@ -194,23 +217,6 @@ class _MovieDetailsState extends State<MovieDetails> {
                   widget.movieData['overview'],
                   textAlign: TextAlign.left,
                 ),
-              ),
-              Container(
-                padding: EdgeInsets.only(right: width * 0.5, top: 20),
-                child: const Text(
-                  'Cast and Crew',
-                  style: TextStyle(
-                    fontSize: 25,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-              Row(
-                children: [
-                  Text('Map Images of cast and crew'),
-                  Text('Images of cast and crew'),
-                  Text('Images of cast and crew'),
-                ],
               ),
             ],
           ),

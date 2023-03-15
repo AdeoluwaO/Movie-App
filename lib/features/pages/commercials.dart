@@ -14,10 +14,15 @@ class Commercial extends StatefulWidget {
 
 class _CommercialState extends State<Commercial> {
   List movies = [];
+  bool isLoading = true;
 
   @override
   void initState() {
+    isLoading;
     fetch();
+    setState(() {
+      isLoading = false;
+    });
     super.initState();
   }
 
@@ -35,7 +40,7 @@ class _CommercialState extends State<Commercial> {
         const Genres(),
         SizedBox(
           height: 600,
-          child: Film(moviesList: movies),
+          child: Film(moviesList: movies, currentStatus: isLoading,),
         ),
       ],
     );

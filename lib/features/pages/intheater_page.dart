@@ -14,10 +14,16 @@ class InTheaterPage extends StatefulWidget {
 
 class _InTheaterPageState extends State<InTheaterPage> {
   List movies = [];
+  bool isLoading = true;
 
   @override
   void initState() {
+    isLoading;
     fetchTrending();
+    isLoading = false;
+    setState(() {
+      isLoading = false;
+    });
     super.initState();
   }
 
@@ -35,7 +41,10 @@ class _InTheaterPageState extends State<InTheaterPage> {
         const Genres(),
         SizedBox(
           height: 600,
-          child: Film(moviesList: movies),
+          child: Film(
+            moviesList: movies,
+            currentStatus: isLoading,
+          ),
         ),
       ],
     );

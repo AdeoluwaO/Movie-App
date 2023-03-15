@@ -46,7 +46,8 @@ Future getMovies() async {
 }
 
 Future drama() async {
-  const trending = 'https://api.themoviedb.org/3/movie/latest?api_key=$apiKey';
+  const trending =
+      'https://api.themoviedb.org/3/movie/upcoming?api_key=$apiKey';
   final res = await http.get(Uri.parse(trending));
   Map jsonFormat = convert.jsonDecode(res.body);
   final movies = jsonFormat['results'];

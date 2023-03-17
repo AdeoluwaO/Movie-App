@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 // local imports
 import './widgets/film.dart';
 import './widgets/genres.dart';
 import '../services/fetch_movies.dart';
+import '../pages/widgets/loading_screen.dart';
 
 class InTheaterPage extends StatefulWidget {
   const InTheaterPage({super.key});
@@ -15,23 +17,29 @@ class InTheaterPage extends StatefulWidget {
 class _InTheaterPageState extends State<InTheaterPage> {
   List movies = [];
   bool isLoading = true;
-  bool loadingUpdate = true;
 
   @override
   void initState() {
-    isLoading;
     fetchTrending();
-    isLoading = false;
-    setState(() {
-      isLoading = loadingUpdate;
-    });
     super.initState();
   }
 
   Future fetchTrending() async {
     isLoading;
-    final response = await getTrending();
-    isLoading = false;
+    var response = await getTrending();
+    if (mounted) {
+      setState(() {
+        movies = response;
+        isLoading = false;
+      });
+    }
+  }
+
+  @override
+  void dispose() {
+    fetchTrending();
+    getTrending();
+    super.dispose();
   }
 
   @override
@@ -41,10 +49,11 @@ class _InTheaterPageState extends State<InTheaterPage> {
         const Genres(),
         SizedBox(
           height: 600,
-          child: Film(
-            moviesList: movies,
-            currentStatus: loadingUpdate,
-          ),
+          child: isLoading
+              ? const LoadingScreen()
+              : Film(
+                  moviesList: movies,
+                ),
         ),
       ],
     );

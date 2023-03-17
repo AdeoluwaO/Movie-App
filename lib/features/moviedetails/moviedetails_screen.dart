@@ -72,7 +72,7 @@ class _MovieDetailsState extends State<MovieDetails> {
                           ),
                         ),
                         child: Container(
-                          padding: EdgeInsets.fromLTRB(width * 0.0, 5, 0, 0),
+                          padding: EdgeInsets.fromLTRB(width * 0.0, 7, 0, 0),
                           child: Stack(
                             children: [
                               Row(
@@ -82,16 +82,27 @@ class _MovieDetailsState extends State<MovieDetails> {
                                   Column(
                                     children: [
                                       const Padding(
-                                        padding: EdgeInsets.only(top: 8.0),
+                                        padding: EdgeInsets.only(top: 12.0),
                                         child: Icon(
                                           Icons.star,
-                                          size: 25,
+                                          size: 30,
                                           color: highlightColor,
                                         ),
                                       ),
+                                      Row(
+                                        children: [
+                                          Text(
+                                            widget.movieData['vote_average']
+                                                .toStringAsFixed(1),
+                                            style: const TextStyle(
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                          const Text('/10'),
+                                        ],
+                                      ),
                                       Text(widget.movieData['popularity']
                                           .toString()),
-                                      const Text('overview')
                                     ],
                                   ),
                                   Column(
@@ -107,7 +118,6 @@ class _MovieDetailsState extends State<MovieDetails> {
                                             status = 'Rated';
                                           });
                                         },
-                                        size: 30,
                                       ),
                                       Text(status)
                                     ],
@@ -133,7 +143,7 @@ class _MovieDetailsState extends State<MovieDetails> {
                         Container(
                           padding: EdgeInsets.only(right: width * 0.3),
                           child: Text(
-                            widget.movieData['title'] ?? 'Not Found',
+                            widget.movieData['title'] ?? 'Not Available',
                             textAlign: TextAlign.left,
                             style: const TextStyle(
                               fontSize: 35,
@@ -169,15 +179,6 @@ class _MovieDetailsState extends State<MovieDetails> {
                           ),
                         ),
                         const SizedBox(height: 10),
-                        Row(
-                          children: [
-                            // mp the button
-                            CustomButton(
-                              title: 'Geners',
-                              onTap: () {},
-                            ),
-                          ],
-                        ),
                       ],
                     ),
                     Padding(
@@ -199,6 +200,24 @@ class _MovieDetailsState extends State<MovieDetails> {
                   ],
                 ),
               ),
+              Row(
+                children: [
+                  // mp the button
+                  CustomButton(
+                    title: 'Action',
+                    onTap: () {},
+                  ),
+                  CustomButton(
+                    title: 'Biography',
+                    onTap: () {},
+                  ),
+
+                  CustomButton(
+                    title: 'Drama',
+                    onTap: () {},
+                  ),
+                ],
+              ),
               Container(
                 padding: EdgeInsets.only(right: width * 0.5, top: 20),
                 child: const Text(
@@ -216,6 +235,7 @@ class _MovieDetailsState extends State<MovieDetails> {
                 child: Text(
                   widget.movieData['overview'],
                   textAlign: TextAlign.left,
+                  style: const TextStyle(height: 1.8, color: Colors.grey),
                 ),
               ),
             ],

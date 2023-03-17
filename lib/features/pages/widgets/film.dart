@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 // local imports
 import '../../global_variables.dart';
@@ -6,9 +7,8 @@ import '../../moviedetails/moviedetails_screen.dart';
 import '../widgets/loading_screen.dart';
 
 class Film extends StatefulWidget {
-  Film({super.key, required this.moviesList, required this.currentStatus});
+  const Film({super.key, required this.moviesList});
   final List moviesList;
-  bool currentStatus = true;
 
   @override
   State<Film> createState() => _Film();
@@ -16,13 +16,13 @@ class Film extends StatefulWidget {
 
 class _Film extends State<Film> {
   int _currentImage = 0;
-  final bool currentStatus = true;
+
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
 
     return PageView.builder(
-      controller: PageController(viewportFraction: 0.8, initialPage: 6),
+      controller: PageController(viewportFraction: 0.8),
       onPageChanged: (int index) {
         setState(() {
           _currentImage = index;
@@ -66,7 +66,6 @@ class _Film extends State<Film> {
                           widget.moviesList[index]['poster_path'].toString()),
                     ),
                   ),
-                  child: widget.currentStatus ? const LoadingScreen() : null,
                 ),
               ),
               builder: (context, value, child) {
@@ -78,6 +77,7 @@ class _Film extends State<Film> {
             ),
             Text(
               widget.moviesList[index]['title'] ?? 'Loading...',
+              textAlign: TextAlign.center,
               style: const TextStyle(fontSize: 23, fontWeight: FontWeight.w500),
             ),
             Row(
@@ -90,7 +90,7 @@ class _Film extends State<Film> {
                 Container(
                   margin: const EdgeInsets.symmetric(horizontal: 6.0),
                   child: Text(
-                    widget.moviesList[index]['vote_count'].toString(),
+                    widget.moviesList[index]['vote_average'].toStringAsFixed(1),
                     style: const TextStyle(
                       fontWeight: FontWeight.w400,
                     ),

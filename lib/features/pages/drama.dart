@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import './widgets/film.dart';
 import './widgets/genres.dart';
 import '../services/fetch_movies.dart';
+import '../pages/widgets/loading_screen.dart';
 
 class Drama extends StatefulWidget {
   const Drama({super.key});
@@ -18,19 +19,26 @@ class _DramaState extends State<Drama> {
 
   @override
   void initState() {
-    isLoading;
     fetch();
-    setState(() {
-      isLoading = false;
-    });
     super.initState();
   }
 
+  @override
+  void dispose() {
+    fetch();
+    drama();
+    super.dispose();
+  }
+
   Future fetch() async {
+    isLoading;
     final response = await drama();
-    setState(() {
-      movies = response;
-    });
+    if (mounted) {
+      setState(() {
+        movies = response;
+        isLoading = false;
+      });
+    }
   }
 
   @override
@@ -40,7 +48,11 @@ class _DramaState extends State<Drama> {
         const Genres(),
         SizedBox(
           height: 600,
-          child: Film(moviesList: movies, currentStatus: isLoading,),
+          child: isLoading
+              ? LoadingScreen()
+              : Film(
+                  moviesList: movies,
+                ),
         ),
       ],
     );

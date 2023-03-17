@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import './widgets/film.dart';
 import './widgets/genres.dart';
 import '../services/fetch_movies.dart';
+import '../pages/widgets/loading_screen.dart';
 
 class BoxOffice extends StatefulWidget {
   const BoxOffice({super.key});
@@ -18,19 +19,27 @@ class _BoxOfficeState extends State<BoxOffice> {
 
   @override
   void initState() {
-    isLoading;
     fetch();
-    setState(() {
-      isLoading = false;
-    });
     super.initState();
   }
 
   Future fetch() async {
+    isLoading;
     final response = await boxOffice();
-    setState(() {
-      movies = response;
-    });
+
+    if (mounted) {
+      setState(() {
+        movies = response;
+        isLoading = false;
+      });
+    }
+  }
+
+  @override
+  void dispose() {
+    fetch();
+    boxOffice();
+    super.dispose();
   }
 
   @override
@@ -39,12 +48,12 @@ class _BoxOfficeState extends State<BoxOffice> {
       children: [
         const Genres(),
         SizedBox(
-          height: 600,
-          child: Film(
-            moviesList: movies,
-            currentStatus: isLoading,
-          ),
-        ),
+            height: 600,
+            child: isLoading
+                ? const LoadingScreen()
+                : Film(
+                    moviesList: movies,
+                  )),
       ],
     );
   }

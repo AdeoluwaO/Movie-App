@@ -8,7 +8,7 @@ class LoadingScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: Lottie.asset(
-        'assets/lottie/human-loading-screen.json',
+        'assets/lottie/wait-loading.json',
       ),
     );
   }

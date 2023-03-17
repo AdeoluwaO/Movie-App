@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import './widgets/film.dart';
 import './widgets/genres.dart';
 import '../services/fetch_movies.dart';
+import '../pages/widgets/loading_screen.dart';
 
 class Commercial extends StatefulWidget {
   const Commercial({super.key});
@@ -18,19 +19,26 @@ class _CommercialState extends State<Commercial> {
 
   @override
   void initState() {
-    isLoading;
     fetch();
-    setState(() {
-      isLoading = false;
-    });
     super.initState();
   }
 
+  @override
+  void dispose() {
+    fetch();
+    commercial();
+    super.dispose();
+  }
+
   Future fetch() async {
+    isLoading;
     final response = await commercial();
-    setState(() {
-      movies = response;
-    });
+    if (mounted) {
+      setState(() {
+        movies = response;
+        isLoading = false;
+      });
+    }
   }
 
   @override
@@ -40,7 +48,11 @@ class _CommercialState extends State<Commercial> {
         const Genres(),
         SizedBox(
           height: 600,
-          child: Film(moviesList: movies, currentStatus: isLoading,),
+          child: isLoading
+              ? const LoadingScreen()
+              : Film(
+                  moviesList: movies,
+                ),
         ),
       ],
     );

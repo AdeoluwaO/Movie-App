@@ -283,31 +283,35 @@ class _MovieDetailsState extends State<MovieDetails> {
                             scrollDirection: Axis.horizontal,
                             itemCount: data.length,
                             itemBuilder: (context, index) {
-                              return Column(
-                                children: [
-                                  CircleAvatar(
-                                    radius: 50.0,
-                                    backgroundImage: NetworkImage(imagePath +
-                                        data[index]['profile_path'].toString()),
-                                  ),
-                                  Container(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 20.0, vertical: 10.0),
-                                    child: Text(
-                                      data[index]['original_name'].toString(),
+                              return Container(
+                                padding: const EdgeInsets.only(top: 20),
+                                child: Column(
+                                  children: [
+                                    CircleAvatar(
+                                      radius: 50.0,
+                                      backgroundImage: NetworkImage(imagePath +
+                                          data[index]['profile_path']
+                                              .toString()),
+                                    ),
+                                    Container(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 20.0, vertical: 10.0),
+                                      child: Text(
+                                        data[index]['original_name'].toString(),
+                                        style: const TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 22),
+                                      ),
+                                    ),
+                                    Text(
+                                      data[index]['character'].toString(),
                                       style: const TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 22),
+                                        color: Colors.grey,
+                                        fontSize: 18,
+                                      ),
                                     ),
-                                  ),
-                                  Text(
-                                    data[index]['character'].toString(),
-                                    style: const TextStyle(
-                                      color: Colors.grey,
-                                      fontSize: 18,
-                                    ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               );
                             }),
                       );
@@ -315,7 +319,7 @@ class _MovieDetailsState extends State<MovieDetails> {
                     if (snapshot.hasError) {
                       return Text(snapshot.error.toString());
                     }
-                    return const LoadingScreen();
+                    return const SizedBox(height: 200);
                   }),
             ],
           ),

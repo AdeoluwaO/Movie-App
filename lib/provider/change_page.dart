@@ -8,3 +8,12 @@ class ChangePage with ChangeNotifier {
     notifyListeners();
   }
 }
+
+class MovieId with ChangeNotifier {
+  int movieId = 0;
+
+  void getId(int id) {
+    movieId = id;
+    notifyListeners();
+  }
+}

@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 // local imports
 import '../../global_variables.dart';
 import '../../moviedetails/moviedetails_screen.dart';
-import '../widgets/loading_screen.dart';
+import '../../services/fetch_movies.dart';
 
 class Film extends StatefulWidget {
   const Film({super.key, required this.moviesList});
@@ -78,7 +77,7 @@ class _Film extends State<Film> {
             Text(
               widget.moviesList[index]['title'] ?? 'Loading...',
               textAlign: TextAlign.center,
-              style: const TextStyle(fontSize: 23, fontWeight: FontWeight.w500),
+              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,

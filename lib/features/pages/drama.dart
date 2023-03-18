@@ -49,7 +49,7 @@ class _DramaState extends State<Drama> {
         SizedBox(
           height: 600,
           child: isLoading
-              ? LoadingScreen()
+              ? const LoadingScreen()
               : Film(
                   moviesList: movies,
                 ),

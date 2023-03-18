@@ -49,8 +49,6 @@ class _LandingPage extends State<LandingPage> {
         child: Text('Testing'),
       ),
       body: pages[page],
-      //Film( ),
-      //Text('Workinh'),
     );
   }
 }

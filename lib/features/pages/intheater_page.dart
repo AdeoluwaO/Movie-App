@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 // local imports
 import './widgets/film.dart';
@@ -15,47 +14,28 @@ class InTheaterPage extends StatefulWidget {
 }
 
 class _InTheaterPageState extends State<InTheaterPage> {
-  List movies = [];
-  bool isLoading = true;
-
-  @override
-  void initState() {
-    fetchTrending();
-    super.initState();
-  }
-
-  Future fetchTrending() async {
-    isLoading;
-    var response = await getTrending();
-    if (mounted) {
-      setState(() {
-        movies = response;
-        isLoading = false;
-      });
-    }
-  }
-
-  @override
-  void dispose() {
-    fetchTrending();
-    getTrending();
-    super.dispose();
-  }
-
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        const Genres(),
-        SizedBox(
-          height: 600,
-          child: isLoading
-              ? const LoadingScreen()
-              : Film(
-                  moviesList: movies,
+    return FutureBuilder(
+        future: getTrending(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.done &&
+              snapshot.hasData) {
+            return Column(
+              children: [
+                const Genres(),
+                SizedBox(
+                  height: 600,
+                  child: Film(
+                    moviesList: snapshot.data,
+                  ),
                 ),
-        ),
-      ],
-    );
+              ],
+            );
+          } else if (snapshot.hasError) {
+            Text(snapshot.error.toString());
+          }
+          return const LoadingScreen();
+        });
   }
 }

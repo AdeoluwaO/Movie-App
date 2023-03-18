@@ -37,7 +37,7 @@ class _MoviesState extends State<Movies> {
     if (mounted) {
       setState(() {
         movies = response;
-    isLoading = false;
+        isLoading = false;
       });
     }
   }
@@ -50,9 +50,8 @@ class _MoviesState extends State<Movies> {
         SizedBox(
           height: 600,
           child: isLoading
-              ? LoadingScreen()
-              :
-               Film(
+              ? const LoadingScreen()
+              : Film(
                   moviesList: movies,
                 ),
         ),

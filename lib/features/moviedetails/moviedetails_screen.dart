@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import '../widgets/custom_icon_button.dart';
 import '../pages/widgets/custom_button.dart';
 import '../global_variables.dart';
+import '../services/fetch_movies.dart';
+import '../pages/widgets/loading_screen.dart';
 
 class MovieDetails extends StatefulWidget {
   const MovieDetails({super.key, required this.movieData});
@@ -45,13 +47,16 @@ class _MovieDetailsState extends State<MovieDetails> {
                     ),
                   ),
                   Padding(
-                    padding:
-                        EdgeInsets.only(top: width * 0.08, left: width * 0.02),
-                    child: const Icon(
-                      Icons.navigate_before_rounded,
-                      size: 50,
-                    ),
-                  ),
+                      padding: EdgeInsets.only(
+                          top: width * 0.08, left: width * 0.01),
+                      child: CustomIconButton(
+                          icon: const Icon(
+                            Icons.navigate_before_rounded,
+                            size: 50,
+                          ),
+                          onTap: () {
+                            Navigator.pop(context);
+                          })),
                   Padding(
                     padding:
                         EdgeInsets.only(left: width * 0.1, top: height * 0.3),
@@ -98,11 +103,17 @@ class _MovieDetailsState extends State<MovieDetails> {
                                                 fontSize: 16,
                                                 fontWeight: FontWeight.bold),
                                           ),
-                                          const Text('/10'),
+                                          const Text('/10',
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.bold)),
                                         ],
                                       ),
-                                      Text(widget.movieData['popularity']
-                                          .toString()),
+                                      Text(
+                                        widget.movieData['popularity']
+                                            .toString(),
+                                        style:
+                                            const TextStyle(color: Colors.grey),
+                                      ),
                                     ],
                                   ),
                                   Column(
@@ -119,7 +130,11 @@ class _MovieDetailsState extends State<MovieDetails> {
                                           });
                                         },
                                       ),
-                                      Text(status)
+                                      Text(
+                                        status,
+                                        style: const TextStyle(
+                                            fontWeight: FontWeight.bold),
+                                      )
                                     ],
                                   )
                                 ],
@@ -164,7 +179,7 @@ class _MovieDetailsState extends State<MovieDetails> {
                                 ),
                               ),
                               const Text(
-                                'PG 13',
+                                'PG-13',
                                 style: TextStyle(
                                   color: Colors.grey,
                                 ),
@@ -200,23 +215,28 @@ class _MovieDetailsState extends State<MovieDetails> {
                   ],
                 ),
               ),
-              Row(
-                children: [
-                  // mp the button
-                  CustomButton(
-                    title: 'Action',
-                    onTap: () {},
-                  ),
-                  CustomButton(
-                    title: 'Biography',
-                    onTap: () {},
-                  ),
-
-                  CustomButton(
-                    title: 'Drama',
-                    onTap: () {},
-                  ),
-                ],
+              FutureBuilder(
+                future: movieDetails(widget.movieData['id']),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.done &&
+                      snapshot.hasData) {
+                    final data = snapshot.data;
+                    return SizedBox(
+                      height: 50,
+                      child: ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: data.length,
+                          itemBuilder: (context, index) {
+                            return CustomButton(
+                                title: data[index]['name'], onTap: () {});
+                          }),
+                    );
+                  }
+                  if (snapshot.hasError) {
+                    return Text(snapshot.error.toString());
+                  }
+                  return const LoadingScreen();
+                },
               ),
               Container(
                 padding: EdgeInsets.only(right: width * 0.5, top: 20),

@@ -63,12 +63,10 @@ Future movieDetails(int id) async {
 Future getCast(int id) async {
   //final int id = 937278;
   final castDetails =
-      "https://api.themoviedb.org/3/movie/$id/reviews?api_key$apiKey";
-
-// https://api.themoviedb.org/3/movie/937278/reviews?api_key=187d2a9c2c1a66c6beac88a4c4681554
+      "https://api.themoviedb.org/3/movie/$id/credits?api_key=$apiKey&language=en-US";
 
   final response = await http.get(Uri.parse(castDetails));
   Map jsonResponse = convert.jsonDecode(response.body);
-  final res = jsonResponse['results'];
+  final res = jsonResponse['cast'];
   return res;
 }

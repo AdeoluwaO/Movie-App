@@ -38,6 +38,7 @@ dependencies:
   provider:
   http: ^0.13.5
   lottie: ^2.3.0
+  
 
 dev_dependencies:
   flutter_test:

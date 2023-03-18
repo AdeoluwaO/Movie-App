@@ -14,47 +14,28 @@ class Commercial extends StatefulWidget {
 }
 
 class _CommercialState extends State<Commercial> {
-  List movies = [];
-  bool isLoading = true;
-
-  @override
-  void initState() {
-    fetch();
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    fetch();
-    commercial();
-    super.dispose();
-  }
-
-  Future fetch() async {
-    isLoading;
-    final response = await commercial();
-    if (mounted) {
-      setState(() {
-        movies = response;
-        isLoading = false;
-      });
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        const Genres(),
-        SizedBox(
-          height: 600,
-          child: isLoading
-              ? const LoadingScreen()
-              : Film(
-                  moviesList: movies,
+    return FutureBuilder(
+        future: commercial(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.done &&
+              snapshot.hasData) {
+            return Column(
+              children: [
+                const Genres(),
+                SizedBox(
+                  height: 600,
+                  child: Film(
+                    moviesList: snapshot.data,
+                  ),
                 ),
-        ),
-      ],
-    );
+              ],
+            );
+          } else if (snapshot.hasError) {
+            Text(snapshot.error.toString());
+          }
+          return const LoadingScreen();
+        });
   }
 }

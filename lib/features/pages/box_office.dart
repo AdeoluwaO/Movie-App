@@ -14,47 +14,28 @@ class BoxOffice extends StatefulWidget {
 }
 
 class _BoxOfficeState extends State<BoxOffice> {
-  List movies = [];
-  bool isLoading = true;
-
-  @override
-  void initState() {
-    fetch();
-    super.initState();
-  }
-
-  Future fetch() async {
-    isLoading;
-    final response = await boxOffice();
-
-    if (mounted) {
-      setState(() {
-        movies = response;
-        isLoading = false;
-      });
-    }
-  }
-
-  @override
-  void dispose() {
-    fetch();
-    boxOffice();
-    super.dispose();
-  }
-
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        const Genres(),
-        SizedBox(
-            height: 600,
-            child: isLoading
-                ? const LoadingScreen()
-                : Film(
-                    moviesList: movies,
-                  )),
-      ],
-    );
+    return FutureBuilder(
+        future: boxOffice(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.done &&
+              snapshot.hasData) {
+            return Column(
+              children: [
+                const Genres(),
+                SizedBox(
+                  height: 600,
+                  child: Film(
+                    moviesList: snapshot.data,
+                  ),
+                ),
+              ],
+            );
+          } else if (snapshot.hasError) {
+            Text(snapshot.error.toString());
+          }
+          return const LoadingScreen();
+        });
   }
 }

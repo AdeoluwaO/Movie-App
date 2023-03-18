@@ -228,14 +228,16 @@ class _MovieDetailsState extends State<MovieDetails> {
                           itemCount: data.length,
                           itemBuilder: (context, index) {
                             return CustomButton(
-                                title: data[index]['name'], onTap: () {});
+                                title: data[index]['name'] ??
+                                    'No Genres Available',
+                                onTap: () {});
                           }),
                     );
                   }
                   if (snapshot.hasError) {
                     return Text(snapshot.error.toString());
                   }
-                  return const LoadingScreen();
+                  return const SizedBox(height: 50);
                 },
               ),
               Container(
@@ -258,6 +260,63 @@ class _MovieDetailsState extends State<MovieDetails> {
                   style: const TextStyle(height: 1.8, color: Colors.grey),
                 ),
               ),
+              Container(
+                padding: EdgeInsets.only(right: width * 0.5),
+                child: const Text(
+                  'Cast & Crew',
+                  textAlign: TextAlign.left,
+                  style: TextStyle(
+                    fontSize: 30,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+              FutureBuilder(
+                  future: getCast(widget.movieData['id']),
+                  builder: (contest, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.done &&
+                        snapshot.hasData) {
+                      final data = snapshot.data;
+                      return Container(
+                        height: 200,
+                        child: ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            itemCount: data.length,
+                            itemBuilder: (context, index) {
+                              return Column(
+                                children: [
+                                  CircleAvatar(
+                                    radius: 50.0,
+                                    backgroundImage: NetworkImage(imagePath +
+                                        data[index]['profile_path'].toString()),
+                                  ),
+                                  Container(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 20.0, vertical: 10.0),
+                                    child: Text(
+                                      data[index]['original_name'].toString(),
+                                      style: const TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 22),
+                                    ),
+                                  ),
+                                  Text(
+                                    data[index]['character'].toString(),
+                                    style: const TextStyle(
+                                      color: Colors.grey,
+                                      fontSize: 18,
+                                    ),
+                                  ),
+                                ],
+                              );
+                            }),
+                      );
+                    }
+                    if (snapshot.hasError) {
+                      return Text(snapshot.error.toString());
+                    }
+                    return const LoadingScreen();
+                  }),
             ],
           ),
         ),
